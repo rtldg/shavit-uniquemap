@@ -1,6 +1,10 @@
 # shavit-uniquemap
 Plugin to support multiple servers for shavit-timer.
 
+### Requirements
+1. Shavit's Timer (https://github.com/shavitush/bhoptimer)
+2. An updated map list (We recommend you use this plugin: https://forums.alliedmods.net/showthread.php?t=56376?t=56376)
+
 ### How it works
 It connects to the shavit database, and stores name of the current map in it. If map is currently played on another server connected to the same database it forces a mapchange. It prevents possible bugs with replays and player records.
 
