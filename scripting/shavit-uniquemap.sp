@@ -17,7 +17,7 @@ public Plugin myinfo =
 	name = "[shavit] Unique Map",
 	author = "theSaint, Updated by Charles_(hypnos)",
 	description = "Disallow to play the same map on different shavit-timer servers",
-	version = "1.1",
+	version = "1.2",
 	url = ""
 }
 
@@ -63,7 +63,6 @@ void UniqueMapProcedure()
 {
 	CreateTimer(1.0, GetDataFromCurrentMapTable);
 	CreateTimer(1.2, ReplaceMapInfo);
-	CreateTimer(20.0, ChangeMap);
 	CreateTimer(60.0, PrintChangedMapInfo);
 }
 
@@ -110,7 +109,7 @@ public void SQL_GetDataFromCurrentMapTable_Callback(Database db, DBResultSet res
 		if (StrEqual(map, gS_MapName) && !StrEqual(ip, gS_ServerIP))
 		{	
 			ForcedMapChange = true;
-
+			CreateTimer(0.1, ChangeMap);
 		}
 	}
 }
