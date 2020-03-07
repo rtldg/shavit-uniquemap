@@ -8,6 +8,11 @@ char gS_MySQLPrefix[32];
 
 char gS_ServerIP[32];
 char gS_MapName[128];
+
+ArrayList g_MapList = null;
+
+int g_mapListSerial = -1;
+
 bool ForcedMapChange;
 bool LastTimeForcedMapChange;
 
@@ -17,12 +22,14 @@ public Plugin myinfo =
 	name = "[shavit] Unique Map",
 	author = "theSaint, Updated by Charles_(hypnos)",
 	description = "Disallow to play the same map on different shavit-timer servers",
-	version = "1.2",
+	version = "1.6",
 	url = ""
 }
 
 public void OnPluginStart()
 {
+	int arraySize = ByteCountToCells(PLATFORM_MAX_PATH);
+	g_MapList = new ArrayList(arraySize);
 
 	// THIS IS TO GET SERVERIP
 	char server_port[10];
@@ -41,6 +48,17 @@ public void OnPluginStart()
 	// DATABASE CONNECTIONS
 	SQL_SetPrefix();
 	SetSQLInfo();	
+}
+
+public void OnConfigsExecuted()
+{
+	if (ReadMapList(g_MapList, g_mapListSerial, "default", MAPLIST_FLAG_CLEARARRAY|MAPLIST_FLAG_MAPSFOLDER) == null)
+	{
+		if (g_mapListSerial == -1)
+		{
+			LogError("Unable to create a valid map list.");
+		}
+	}
 }
 
 public void OnMapStart() 
@@ -128,8 +146,13 @@ public Action ChangeMap(Handle timer)
 {
 	if(ForcedMapChange)
 	{
-		char map[128];
-		GetNextMap(map, 128);
+		char map[PLATFORM_MAX_PATH];
+
+		//GetNextMap(map, 128);
+		//Get random map to prevent map change loop
+		int b = GetRandomInt(0, g_MapList.Length - 1);
+		g_MapList.GetString(b, map, sizeof(map));
+
 		ForceChangeLevel(map, "Played on Another Server");
 	}
 	
