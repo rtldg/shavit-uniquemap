@@ -25,6 +25,5 @@ If you want to run multiple servers using same database you should :
             * On Windows Servers by using `mklink /D` command or even better by using `mklink /J` which creates directory junction.
             
             For example for folder structure like above on Linux you would run : `ln -s /home/steam/server1/csgo/addons/sourcemod/data/replaybot /home/steam/server2/csgo/addons/sourcemod/data/replaybot`
-    * If servers are running on different machines
-    NOT TRIED YET! IF YOU KNOW HOW TO ACHIVE IT, PLEASE WRITE AN ISSUE
+    * If servers are running on different machines, you can share the directory through the use of network shares.
         
