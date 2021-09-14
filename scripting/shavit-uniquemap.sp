@@ -136,10 +136,18 @@ public Action ReplaceMapInfo(Handle timer)
 {
 	char[] sQuery = new char[512];
 	FormatEx(sQuery, 512, "REPLACE INTO %scurrentmap (server_ip, current_map, last_time_changed) VALUES ('%s', '%s', %i);", gS_MySQLPrefix, gS_ServerIP , gS_MapName , ForcedMapChange)
-	
-	SQL_Query(gH_SQL, sQuery);
+
+	gH_SQL.Query(SQL_ReplaceMapInfo, sQuery);
 	
 	return Plugin_Handled;
+}
+
+public void SQL_ReplaceMapInfo(Database db, DBResultSet results, const char[] error, any data)
+{
+	if(results == null)
+	{	
+		LogError("COS SIE SPIERDOLILO W SQL_ReplaceMapInfo == '%s'", error);
+	}
 }
 
 public Action ChangeMap(Handle timer)
